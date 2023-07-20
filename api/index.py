@@ -30,7 +30,6 @@ async def get(icao_code: str):
         airport_data
     )
 
-
 class Airport:
 
     def convert_to_fahrenheit(self, celcius_value):

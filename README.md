@@ -19,17 +19,16 @@ system will return a card with the following data:
   precision)
 
 - A forecast report for the next two periods that contains the following entries
-  - The time offset from the start of the period
-  (/report/forecast/period/dateStart) in hrs:min
+  - The time offset from the start of the period in hrs:min
   - Wind Speed (MPH)
   - Wind Direction (degrees true)
 
-The app also suggest the best runway for takeoff/landing based of off wind direction and available runways.
+The app also suggest the best runway for takeoff/landing based off wind direction and available runways.
 
 ## Final thoughts
 
 I estimate that I spent a total of 12 hours working on this project. Some features I would like to add would be displaying the raw metar data, a small map on the card that shows the location of the airport.
-I would also like to add some test to ensure functionality of the methods I used on the backend. I would also like to add more user validation and data validation when buildling the Airport and ForecastReport objects.
+I would also like to add some tests to ensure functionality of the methods I used on the backend. I would also like to add more user validation and data validation when buildling the Airport and ForecastReport objects.
 
 ## How It Works
 
