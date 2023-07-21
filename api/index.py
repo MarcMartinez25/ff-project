@@ -7,6 +7,9 @@ from datetime import datetime
 app = FastAPI()
 
 NO_DATA_MESSAGE = 'Unable to get data'
+MPH_TO_KTS_RATIO = 1.15078
+CELSIUS_TO_FARENHEIT_RATIO = 1.8
+FARENHEIT_OFFSET = 32
 
 conditions_headers = {'ff-coding-exercise': '1'}
 airport_data_headers = {'ff-coding-exercise': '1'}
@@ -24,6 +27,8 @@ async def get(icao_code: str):
     airport_response = requests.get(airport_data_url, headers=airport_data_headers, auth = auth_user)
     airport_data = airport_response.json()
 
+    # return airport_conditions['report']['conditions']['cloudLayers'][-1]
+
     return Airport(
         airport_conditions['report']['conditions'],
         airport_conditions['report']['forecast']['conditions'],
@@ -33,7 +38,7 @@ async def get(icao_code: str):
 class Airport:
 
     def convert_to_fahrenheit(self, celcius_value):
-        return celcius_value * 1.8 + 32
+        return celcius_value * CELSIUS_TO_FARENHEIT_RATIO + FARENHEIT_OFFSET
     
     def get_list_of_runways(self, runways):
         runway_list = []
@@ -59,6 +64,20 @@ class Airport:
             forecasts_reports.append(new_forecats_report)
 
         return forecasts_reports
+    
+    def get_cloud_coverage(self, conditions):
+        greatest_cloud_layer = NO_DATA_MESSAGE
+
+        if conditions['cloudLayers']:
+            cloud_layer = conditions['cloudLayers'][-1]
+
+            if 'altitudeFt' in cloud_layer and cloud_layer['altitudeFt'] > 0:
+                altitude = round(cloud_layer['altitudeFt'])
+                greatest_cloud_layer = f"{cloud_layer['coverage']} at {altitude}"
+            else:
+                greatest_cloud_layer = f"{cloud_layer['coverage']}"
+        
+        return greatest_cloud_layer
 
     def __init__(self, conditions, forecasts, airport_data):
         self.name = airport_data['displayName']
@@ -74,18 +93,20 @@ class Airport:
         self.dewpointF = self.convert_to_fahrenheit(conditions['dewpointC'])
         self.relativeHumidity = conditions['relativeHumidity']
         self.visibility = conditions['visibility']['distanceSm']
-        self.windSpeedMPH = round(conditions['wind']['speedKts'] * 1.15078)
+        self.windSpeedMPH = round(conditions['wind']['speedKts'] * MPH_TO_KTS_RATIO)
         if 'wind' in conditions and 'direction' in conditions['wind']:
             direction = conditions['wind']['direction']
             self.windDirection = str(direction) + '°'
-            self.runwayInUse = self.find_best_runway(direction, self.runways) 
+            if 'runways' in airport_data:
+                self.runways = self.get_list_of_runways(airport_data['runways'])
+                self.runwayInUse = self.find_best_runway(direction, self.runways) 
         else:
             self.windDirection = NO_DATA_MESSAGE
             self.runwayInUse = NO_DATA_MESSAGE
+            self.runways = NO_DATA_MESSAGE
 
-        self.cloudCoverage = 'NEED TO BUILD'
-        self.forecastReports = self.build_forecast_reports(forecasts, self.time)
-        self.runways = self.get_list_of_runways(airport_data['runways'])
+        self.cloudCoverage = self.get_cloud_coverage(conditions)
+        self.forecastReports = self.build_forecast_reports(forecasts, self.time)\
 
 class ForecastReport:
     def get_time_offset(self, date_issued, current_time):

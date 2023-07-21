@@ -1,5 +1,5 @@
-import { Airport } from '@/types/Airport';
-import axios from 'axios'
+import { Airport } from "@/types/Airport";
+import axios from "axios"
 
 export const getMetarDataByIcaoCode = async (
   icaoCode: string,

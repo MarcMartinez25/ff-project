@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react"
 
 type Props = {
   icaoCode: string,
@@ -11,19 +11,19 @@ const SearchBox = ({ icaoCode, setIcaoCode }: Props) => {
       <input
         value={icaoCode}
         onChange={(e) => setIcaoCode(e.target.value)}
-        type='text'
+        type="text"
         required
+        minLength={4}
         maxLength={4}
         placeholder="Enter an ICAO Code"
         className="p-2 mr-2 border-2 rounded border-blue-600 uppercase h-12"
-      >
-      </input>
-      <p className='
+      />
+      <p className="
         flex 
         text-xs 
         text-zinc-300 
         ml-2 
-        mt-1'>
+        mt-1">
         Ex. KOKC, EGLL, KJFK
       </p>
     </div>

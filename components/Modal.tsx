@@ -1,12 +1,12 @@
-import React from 'react'
+import React from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons"
 type Props = {
   description: string,
-  setShowModal: (showModal: string) => void
+  setModalMessage: (modalMessage: string) => void
 };
 
-const Modal = ({ description, setShowModal }: Props) => {
+const Modal = ({ description, setModalMessage }: Props) => {
   return (
     <>
       <div
@@ -16,7 +16,7 @@ const Modal = ({ description, setShowModal }: Props) => {
           <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
             <div className="flex items-start justify-between px-4 pt-4">
               <h3 className="text-xl font-semibold text-gray-900">
-                <FontAwesomeIcon icon={faExclamationTriangle} className='text-orange-300 pr-4' /> Error
+                <FontAwesomeIcon icon={faExclamationTriangle} className='text-red-500 pr-4' /> Error
               </h3>
             </div>
             <div className="relative p-4 flex-auto">
@@ -28,7 +28,7 @@ const Modal = ({ description, setShowModal }: Props) => {
               <button
                 className="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:ml-3 sm:w-auto"
                 type="button"
-                onClick={() => setShowModal("")}
+                onClick={() => setModalMessage("")}
               >
                 Okay
               </button>

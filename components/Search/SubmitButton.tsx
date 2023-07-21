@@ -1,6 +1,6 @@
-import React from 'react'
+import React from "react"
 
-const SubmintButton = () => {
+const SubmitButton = () => {
   return (
     <button className="
       border-2
@@ -19,4 +19,4 @@ const SubmintButton = () => {
   )
 }
 
-export default SubmintButton
+export default SubmitButton

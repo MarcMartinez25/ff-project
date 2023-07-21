@@ -7,15 +7,15 @@ import SubmitButton from "./SubmitButton"
 type Prop = {
   airportList: Airport[],
   setAirportList: (airportList: Airport[]) => void,
-  setShowModal: (showModal: string) => void
+  setModalMessage: (modal: string) => void
 }
 
-const Search = ({ airportList, setAirportList, setShowModal }: Prop) => {
+const Search = ({ airportList, setAirportList, setModalMessage }: Prop) => {
   const [icaoCode, setIcaoCode] = useState<string>("");
 
   const callEndpoint = (event: any) => {
     event.preventDefault();
-    getMetarDataByIcaoCode(icaoCode, airportList, setAirportList, setShowModal);
+    getMetarDataByIcaoCode(icaoCode, airportList, setAirportList, setModalMessage);
   }
 
   return (
