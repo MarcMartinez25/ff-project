@@ -27,14 +27,18 @@ The app also suggest the best runway for takeoff/landing based off wind directio
 
 ## Final thoughts
 
-I estimate that I spent a total of 15 hours working on this project. Some features I would like to add would be displaying the raw metar data, a small map on the card that shows the location of the airport.
-I would also like to add some tests to ensure functionality of the methods I used on the backend. I would also like to add more user validation and data validation when buildling the Airport and ForecastReport objects.
+I estimate that I spent a total of 15 hours working on this project.
 
-I would also move the username and password for the basic auth to config file.
-
-If this project were to grow then I would consider using react context or a state management system so that I don't pass props down to so many components.
-
-I would also add a new get_list endpoint that would allow the user to enter multiple icao codes and return a list of airport infomation for each one.
+Some features I would like to add would be:
+- displaying the raw metar data
+- adding a small map on the card that shows the location of the airport
+- I would like to add some tests to ensure functionality of the methods I used on the backend.
+- I would also like to add more user validation and data validation when buildling the Airport and ForecastReport objects.
+- I would also move the username and password for the basic auth to config file.
+- If this project were to grow then I would consider using react context or a state management system so that I don't pass props down to so many components.
+- I would also add a new get_list endpoint that would allow the user to enter multiple icao codes and return a list of airport infomation for each one.
+- A nice feature would be to add a toggle to switch between mph and kts, and celcius and fahrenheit. As a pilot, I mainly use kts and celcius.
+- To make the code cleaner, I would also move the classes `Airport` and `ForecastReport` to their own files.
 
 ## How It Works
 
